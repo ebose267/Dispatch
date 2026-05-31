@@ -8,299 +8,159 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --ink:     #0d0d0d;
-  --paper:   #f5f0e8;
-  --cream:   #ede8dc;
-  --accent:  #c8401a;
-  --gold:    #c9962a;
-  --muted:   #888070;
-  --border:  #ccc4b0;
-  --success: #1f7a4a;
-  --mono:    'JetBrains Mono', monospace;
-  --sans:    'Syne', sans-serif;
-  --r:       4px;
-  --shadow:  3px 3px 0 var(--ink);
+  --ink:#0d0d0d; --paper:#f5f0e8; --cream:#ede8dc; --accent:#c8401a;
+  --gold:#c9962a; --muted:#888070; --border:#ccc4b0; --success:#1f7a4a;
+  --mono:'JetBrains Mono',monospace; --sans:'Syne',sans-serif;
+  --r:4px; --shadow:3px 3px 0 var(--ink);
 }
-
-body {
-  font-family: var(--sans);
-  background: var(--paper);
-  color: var(--ink);
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-}
-
+body { font-family:var(--sans); background:var(--paper); color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative; }
 body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.3;
-  pointer-events: none;
-  z-index: 0;
+  content:''; position:fixed; inset:0;
+  background-image: linear-gradient(var(--border) 1px,transparent 1px), linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:40px 40px; opacity:.28; pointer-events:none; z-index:0;
 }
+.shell { position:relative; z-index:1; max-width:880px; margin:0 auto; padding:2rem 1.5rem 5rem; }
 
-.shell {
-  position: relative; z-index: 1;
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 5rem;
-}
+/* Header */
+header { display:flex; align-items:flex-end; justify-content:space-between; border-bottom:2px solid var(--ink); padding-bottom:1rem; margin-bottom:2rem; }
+.logo { font-size:2.2rem; font-weight:800; letter-spacing:-.04em; line-height:1; }
+.logo em { color:var(--accent); font-style:normal; }
+.logo-sub { font-size:.65rem; font-family:var(--mono); color:var(--muted); letter-spacing:.12em; text-transform:uppercase; margin-top:.3rem; }
+.hright { font-family:var(--mono); font-size:.7rem; color:var(--muted); text-align:right; line-height:1.6; }
 
-/* ── Header ── */
-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  border-bottom: 2px solid var(--ink);
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
+/* Config bar */
+.cfgbar { display:grid; grid-template-columns:1fr auto auto; gap:.75rem; align-items:end; margin-bottom:1.5rem; }
+.field { display:flex; flex-direction:column; gap:.3rem; }
+label { font-size:.65rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:500; }
+input[type=text],input[type=url],input[type=password],input[type=email],textarea,select {
+  font-family:var(--mono); font-size:.85rem; background:#fff; border:1.5px solid var(--border);
+  border-radius:var(--r); padding:.52rem .75rem; color:var(--ink); outline:none; width:100%;
+  transition:border-color .15s, box-shadow .15s;
 }
-.logo { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
-.logo em { color: var(--accent); font-style: normal; }
-.logo-sub {
-  font-size: 0.65rem; font-family: var(--mono);
-  color: var(--muted); letter-spacing: 0.12em;
-  text-transform: uppercase; margin-top: 0.3rem;
-}
-.header-right { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-align: right; }
+input:focus,textarea:focus,select:focus { border-color:var(--ink); box-shadow:var(--shadow); }
 
-/* ── Fields ── */
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
-.field { display: flex; flex-direction: column; gap: 0.3rem; }
-label {
-  font-size: 0.65rem; font-family: var(--mono);
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--muted); font-weight: 500;
+/* Tabs */
+.tabs { display:flex; gap:0; border-bottom:2px solid var(--ink); margin-bottom:1.5rem; }
+.tab {
+  font-family:var(--sans); font-size:.82rem; font-weight:700; letter-spacing:.02em;
+  padding:.55rem 1.2rem; border:none; background:transparent; cursor:pointer;
+  color:var(--muted); border-bottom:3px solid transparent; margin-bottom:-2px;
+  transition:all .12s;
 }
-input[type="text"], input[type="url"],
-input[type="password"], input[type="email"], textarea {
-  font-family: var(--mono); font-size: 0.85rem;
-  background: #fff; border: 1.5px solid var(--border);
-  border-radius: var(--r); padding: 0.55rem 0.75rem;
-  color: var(--ink); outline: none; width: 100%;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-input:focus, textarea:focus {
-  border-color: var(--ink); box-shadow: var(--shadow);
-}
+.tab.on { color:var(--ink); border-bottom-color:var(--accent); }
+.tab-panel { display:none; }
+.tab-panel.on { display:block; }
 
-/* ── Composer ── */
-.composer {
-  border: 2px solid var(--ink); border-radius: var(--r);
-  background: #fff; box-shadow: var(--shadow); overflow: hidden;
+/* ── IMPORT PANEL ── */
+.import-area {
+  border:2px dashed var(--border); border-radius:var(--r); padding:1.5rem;
+  text-align:center; cursor:pointer; transition:all .15s; background:#fff; position:relative;
 }
+.import-area.drag { border-color:var(--accent); background:#fff7f5; }
+.import-area input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.import-icon { font-size:2rem; margin-bottom:.5rem; }
+.import-hint { font-size:.8rem; font-family:var(--mono); color:var(--muted); line-height:1.6; }
+.import-hint strong { color:var(--ink); }
 
-.toolbar {
-  display: flex; align-items: center; gap: 0.4rem;
-  padding: 0.6rem 0.85rem;
-  background: var(--cream); border-bottom: 1.5px solid var(--border);
-  flex-wrap: wrap;
-}
-.tlabel {
-  font-size: 0.62rem; font-family: var(--mono);
-  text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--muted); margin-right: 0.2rem;
-}
-.tbtn {
-  font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
-  padding: 0.28rem 0.55rem;
-  border: 1.5px solid var(--border); border-radius: var(--r);
-  background: #fff; cursor: pointer; color: var(--ink);
-  transition: all 0.1s;
-}
-.tbtn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.or-divider { display:flex; align-items:center; gap:.75rem; margin:1rem 0; }
+.or-divider::before,.or-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+.or-divider span { font-size:.65rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; color:var(--muted); }
 
-.mode-pills { display: flex; gap: 0.3rem; margin-left: auto; }
-.mpill {
-  font-family: var(--mono); font-size: 0.68rem; font-weight: 500;
-  padding: 0.22rem 0.65rem; border: 1.5px solid var(--border);
-  border-radius: 99px; background: transparent; cursor: pointer;
-  color: var(--muted); transition: all 0.1s;
-}
-.mpill.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+#paste-box { min-height:120px; font-size:.82rem; resize:vertical; font-family:var(--mono); }
+.paste-hint { font-size:.68rem; font-family:var(--mono); color:var(--muted); margin-top:.4rem; }
 
-.composer-body { padding: 0.9rem 1rem; }
+.import-preview {
+  margin-top:1rem; border:1.5px solid var(--border); border-radius:var(--r);
+  overflow:hidden; display:none;
+}
+.import-preview.show { display:block; }
+.iph { display:flex; align-items:center; justify-content:space-between; padding:.5rem .85rem; background:var(--cream); border-bottom:1px solid var(--border); }
+.iph-title { font-size:.68rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; font-weight:600; }
+.ipt { max-height:160px; overflow-y:auto; }
+.ipt table { width:100%; border-collapse:collapse; font-family:var(--mono); font-size:.78rem; }
+.ipt th { padding:.4rem .75rem; background:var(--cream); font-weight:600; text-align:left; border-bottom:1px solid var(--border); color:var(--muted); font-size:.65rem; text-transform:uppercase; letter-spacing:.08em; }
+.ipt td { padding:.38rem .75rem; border-bottom:1px solid #f0ebe0; }
+.ipt tr:last-child td { border-bottom:none; }
 
-.subject-row {
-  display: flex; align-items: center; gap: 0.6rem;
-  padding-bottom: 0.7rem; border-bottom: 1px dashed var(--border);
-  margin-bottom: 0.7rem;
-}
-.subject-row label { white-space: nowrap; }
-.subject-row input {
-  font-family: var(--sans); font-size: 1rem; font-weight: 600;
-  border: none; padding: 0; outline: none; flex: 1;
-  background: transparent; box-shadow: none !important;
-}
+.import-actions { display:flex; align-items:center; gap:.75rem; margin-top:1rem; flex-wrap:wrap; }
 
-#msgbox {
-  min-height: 200px; font-family: var(--mono); font-size: 0.85rem;
-  border: none; padding: 0; resize: vertical; width: 100%;
-  line-height: 1.75; color: var(--ink); outline: none;
-  box-shadow: none !important;
-}
+/* ── COMPOSE PANEL ── */
+.composer { border:2px solid var(--ink); border-radius:var(--r); background:#fff; box-shadow:var(--shadow); overflow:hidden; }
+.toolbar { display:flex; align-items:center; gap:.4rem; padding:.6rem .85rem; background:var(--cream); border-bottom:1.5px solid var(--border); flex-wrap:wrap; }
+.tlabel { font-size:.62rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-right:.2rem; }
+.tbtn { font-family:var(--mono); font-size:.75rem; font-weight:500; padding:.28rem .55rem; border:1.5px solid var(--border); border-radius:var(--r); background:#fff; cursor:pointer; color:var(--ink); transition:all .1s; }
+.tbtn:hover { background:var(--ink); color:#fff; border-color:var(--ink); }
+.mode-pills { display:flex; gap:.3rem; margin-left:auto; }
+.mpill { font-family:var(--mono); font-size:.68rem; font-weight:500; padding:.22rem .65rem; border:1.5px solid var(--border); border-radius:99px; background:transparent; cursor:pointer; color:var(--muted); transition:all .1s; }
+.mpill.on { background:var(--accent); border-color:var(--accent); color:#fff; }
+.cbody { padding:.9rem 1rem; }
+.subject-row { display:flex; align-items:center; gap:.6rem; padding-bottom:.7rem; border-bottom:1px dashed var(--border); margin-bottom:.7rem; }
+.subject-row label { white-space:nowrap; }
+.subject-row input { font-family:var(--sans); font-size:1rem; font-weight:600; border:none; padding:0; outline:none; flex:1; background:transparent; box-shadow:none !important; }
+#msgbox { min-height:200px; font-family:var(--mono); font-size:.85rem; border:none; padding:0; resize:vertical; width:100%; line-height:1.75; color:var(--ink); outline:none; box-shadow:none !important; }
+.ph-bar { display:flex; flex-wrap:wrap; gap:.35rem; padding:.55rem 1rem; background:var(--cream); border-top:1px dashed var(--border); }
+.ph-label { font-size:.62rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; color:var(--muted); align-self:center; margin-right:.2rem; }
+.php { font-family:var(--mono); font-size:.7rem; font-weight:500; padding:.18rem .5rem; border:1.5px solid var(--gold); border-radius:99px; background:transparent; color:var(--gold); cursor:pointer; transition:all .1s; }
+.php:hover { background:var(--gold); color:#fff; }
 
-/* ── Placeholder bar ── */
-.ph-bar {
-  display: flex; flex-wrap: wrap; gap: 0.35rem;
-  padding: 0.55rem 1rem;
-  background: var(--cream); border-top: 1px dashed var(--border);
-}
-.ph-label {
-  font-size: 0.62rem; font-family: var(--mono);
-  text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--muted); align-self: center; margin-right: 0.2rem;
-}
-.php {
-  font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
-  padding: 0.18rem 0.5rem; border: 1.5px solid var(--gold);
-  border-radius: 99px; background: transparent; color: var(--gold);
-  cursor: pointer; transition: all 0.1s;
-}
-.php:hover { background: var(--gold); color: #fff; }
+/* Actions */
+.actions { display:flex; align-items:center; gap:.7rem; margin-top:1.25rem; flex-wrap:wrap; }
+.btn { font-family:var(--sans); font-size:.9rem; font-weight:700; padding:.65rem 1.5rem; border-radius:var(--r); cursor:pointer; transition:all .14s; display:flex; align-items:center; gap:.4rem; }
+.btn-primary { background:var(--ink); color:#fff; border:2px solid var(--ink); }
+.btn-primary:hover { background:var(--accent); border-color:var(--accent); transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); }
+.btn-primary:active { transform:none; box-shadow:none; }
+.btn-primary:disabled { opacity:.4; cursor:not-allowed; transform:none; box-shadow:none; }
+.btn-ghost { background:transparent; color:var(--ink); border:2px solid var(--border); }
+.btn-ghost:hover { border-color:var(--ink); background:var(--cream); }
+.btn-danger { background:transparent; color:var(--accent); border:2px solid var(--accent); }
+.btn-danger:hover { background:var(--accent); color:#fff; }
+.resend-opt { margin-left:auto; display:flex; align-items:center; gap:.4rem; }
+.resend-opt label { font-size:.72rem; font-family:var(--mono); text-transform:none; letter-spacing:0; color:var(--muted); cursor:pointer; }
+input[type=checkbox] { width:14px; height:14px; accent-color:var(--accent); cursor:pointer; }
 
-/* ── Action row ── */
-.actions {
-  display: flex; align-items: center; gap: 0.7rem;
-  margin-top: 1.25rem; flex-wrap: wrap;
-}
-.btn-send {
-  font-family: var(--sans); font-size: 0.95rem; font-weight: 700;
-  padding: 0.65rem 1.6rem; background: var(--ink); color: #fff;
-  border: 2px solid var(--ink); border-radius: var(--r);
-  cursor: pointer; transition: all 0.14s;
-  display: flex; align-items: center; gap: 0.45rem;
-}
-.btn-send:hover {
-  background: var(--accent); border-color: var(--accent);
-  transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink);
-}
-.btn-send:active { transform: none; box-shadow: none; }
-.btn-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+/* Stats chips */
+.chips { display:flex; gap:.6rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+.chip { flex:1; min-width:80px; padding:.55rem .8rem; border:1.5px solid var(--border); border-radius:var(--r); background:#fff; }
+.chip-val { font-size:1.5rem; font-weight:800; line-height:1; }
+.chip-val.s { color:var(--success); } .chip-val.p { color:var(--gold); } .chip-val.f { color:var(--accent); }
+.chip-key { font-size:.6rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-top:.15rem; }
 
-.btn-preview {
-  font-family: var(--sans); font-size: 0.88rem; font-weight: 600;
-  padding: 0.65rem 1.1rem; background: transparent; color: var(--ink);
-  border: 2px solid var(--border); border-radius: var(--r);
-  cursor: pointer; transition: all 0.12s;
-}
-.btn-preview:hover { border-color: var(--ink); background: var(--cream); }
+/* Status log */
+.statusbox { margin-top:1.25rem; border:1.5px solid var(--border); border-radius:var(--r); overflow:hidden; display:none; }
+.statusbox.show { display:block; }
+.shead { display:flex; align-items:center; justify-content:space-between; padding:.5rem .85rem; background:var(--cream); border-bottom:1px solid var(--border); }
+.stitle { font-size:.65rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; font-weight:600; }
+.sdot { width:8px; height:8px; border-radius:50%; background:var(--muted); transition:background .3s; }
+.sdot.sending { background:var(--gold); animation:pulse .8s infinite; }
+.sdot.ok { background:var(--success); } .sdot.err { background:var(--accent); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+.slog { padding:.7rem .85rem; font-family:var(--mono); font-size:.8rem; line-height:1.85; max-height:180px; overflow-y:auto; }
+.ll { display:block; }
+.ll.ok { color:var(--success); } .ll.err { color:var(--accent); } .ll.info { color:var(--muted); }
 
-.resend-opt {
-  margin-left: auto; display: flex; align-items: center; gap: 0.4rem;
-}
-.resend-opt label {
-  font-size: 0.72rem; font-family: var(--mono);
-  text-transform: none; letter-spacing: 0; color: var(--muted); cursor: pointer;
-}
-input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--accent); cursor: pointer; }
+/* Preview overlay */
+.overlay { display:none; position:fixed; inset:0; background:rgba(13,13,13,.65); z-index:200; align-items:center; justify-content:center; padding:1.5rem; }
+.overlay.open { display:flex; }
+.pcard { background:#fff; border:2px solid var(--ink); border-radius:var(--r); box-shadow:6px 6px 0 var(--ink); max-width:640px; width:100%; max-height:85vh; overflow:hidden; display:flex; flex-direction:column; }
+.phead { display:flex; align-items:center; justify-content:space-between; padding:.7rem 1rem; background:var(--cream); border-bottom:1.5px solid var(--border); }
+.phead h3 { font-size:.85rem; font-weight:700; }
+.xbtn { background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--muted); }
+.pmeta { padding:.55rem 1rem; border-bottom:1px dashed var(--border); font-size:.77rem; font-family:var(--mono); color:var(--muted); }
+.pmeta strong { color:var(--ink); }
+.pbody { padding:1rem; overflow-y:auto; flex:1; font-size:.88rem; line-height:1.75; white-space:pre-wrap; font-family:var(--mono); }
+.pbody.html { font-family:inherit; white-space:normal; }
+.pfooter { padding:.6rem 1rem; border-top:1px solid var(--border); display:flex; gap:.5rem; }
+.pfooter input { flex:1; font-size:.78rem; padding:.38rem .6rem; }
+.pfooter button { font-family:var(--sans); font-size:.8rem; font-weight:700; padding:.38rem .85rem; background:var(--ink); color:#fff; border:none; border-radius:var(--r); cursor:pointer; }
 
-/* ── Status log ── */
-.statusbox {
-  margin-top: 1.25rem; border: 1.5px solid var(--border);
-  border-radius: var(--r); overflow: hidden; display: none;
-}
-.statusbox.show { display: block; }
+footer { margin-top:3rem; padding-top:1rem; border-top:1px solid var(--border); display:flex; justify-content:space-between; font-size:.68rem; font-family:var(--mono); color:var(--muted); }
 
-.shead {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0.5rem 0.85rem; background: var(--cream);
-  border-bottom: 1px solid var(--border);
-}
-.stitle { font-size: 0.65rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
-.sdot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); transition: background 0.3s; }
-.sdot.sending { background: var(--gold); animation: pulse 0.8s infinite; }
-.sdot.ok { background: var(--success); }
-.sdot.err { background: var(--accent); }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
-
-.slog {
-  padding: 0.7rem 0.85rem; font-family: var(--mono); font-size: 0.8rem;
-  line-height: 1.85; max-height: 180px; overflow-y: auto;
-}
-.ll { display: block; }
-.ll.ok   { color: var(--success); }
-.ll.err  { color: var(--accent); }
-.ll.info { color: var(--muted); }
-
-/* ── Stats ── */
-.stats { display: none; gap: 0.7rem; margin-top: 0.7rem; flex-wrap: wrap; }
-.stats.show { display: flex; }
-.stat {
-  flex: 1; min-width: 90px; padding: 0.6rem 0.85rem;
-  border: 1.5px solid var(--border); border-radius: var(--r); background: #fff;
-}
-.sval { font-size: 1.6rem; font-weight: 800; line-height: 1; }
-.sval.s { color: var(--success); }
-.sval.k { color: var(--gold); }
-.sval.f { color: var(--accent); }
-.skey { font-size: 0.62rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.2rem; }
-
-/* ── Preview overlay ── */
-.overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(13,13,13,0.65); z-index: 200;
-  align-items: center; justify-content: center; padding: 1.5rem;
-}
-.overlay.open { display: flex; }
-
-.pcard {
-  background: #fff; border: 2px solid var(--ink);
-  border-radius: var(--r); box-shadow: 6px 6px 0 var(--ink);
-  max-width: 640px; width: 100%; max-height: 85vh;
-  overflow: hidden; display: flex; flex-direction: column;
-}
-.phead {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0.7rem 1rem; background: var(--cream);
-  border-bottom: 1.5px solid var(--border);
-}
-.phead h3 { font-size: 0.85rem; font-weight: 700; }
-.xbtn { background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--muted); }
-
-.pmeta {
-  padding: 0.55rem 1rem; border-bottom: 1px dashed var(--border);
-  font-size: 0.77rem; font-family: var(--mono); color: var(--muted);
-}
-.pmeta strong { color: var(--ink); }
-
-.pbody {
-  padding: 1rem; overflow-y: auto; flex: 1;
-  font-size: 0.88rem; line-height: 1.75;
-  white-space: pre-wrap; font-family: var(--mono);
-}
-.pbody.html { font-family: inherit; white-space: normal; }
-
-.pfooter {
-  padding: 0.6rem 1rem; border-top: 1px solid var(--border);
-  display: flex; gap: 0.5rem;
-}
-.pfooter input {
-  flex: 1; font-size: 0.78rem; padding: 0.38rem 0.6rem;
-}
-.pfooter button {
-  font-family: var(--sans); font-size: 0.8rem; font-weight: 700;
-  padding: 0.38rem 0.85rem; background: var(--ink); color: #fff;
-  border: none; border-radius: var(--r); cursor: pointer;
-}
-
-footer {
-  margin-top: 3rem; padding-top: 1rem;
-  border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between;
-  font-size: 0.68rem; font-family: var(--mono); color: var(--muted);
-}
-
-@media (max-width:600px) {
-  .row2 { grid-template-columns: 1fr; }
-  .actions { flex-direction: column; align-items: stretch; }
-  .resend-opt { margin-left: 0; }
+@media(max-width:600px) {
+  .cfgbar { grid-template-columns:1fr; }
+  .actions { flex-direction:column; align-items:stretch; }
+  .resend-opt { margin-left:0; }
+  .chips { gap:.4rem; }
 }
 </style>
 </head>
@@ -310,13 +170,13 @@ footer {
   <header>
     <div>
       <div class="logo">Dis<em>patch</em></div>
-      <div class="logo-sub">Personal Email Sender · v1.1</div>
+      <div class="logo-sub">Personal Email Sender · v1.2</div>
     </div>
-    <div class="header-right" id="clock">—</div>
+    <div class="hright" id="hright">—</div>
   </header>
 
   <!-- Config -->
-  <div class="row2">
+  <div class="cfgbar">
     <div class="field">
       <label>GAS Web App URL</label>
       <input type="url" id="gas-url" placeholder="https://script.google.com/macros/s/.../exec">
@@ -325,64 +185,114 @@ footer {
       <label>Secret Token</label>
       <input type="password" id="token" placeholder="Your secret token">
     </div>
+    <div class="field">
+      <label>&nbsp;</label>
+      <button class="btn btn-ghost" onclick="fetchStats()" style="white-space:nowrap">↻ Sheet Stats</button>
+    </div>
   </div>
 
-  <!-- Composer -->
-  <div class="composer">
-    <div class="toolbar">
-      <span class="tlabel">Format</span>
-      <button class="tbtn" onclick="wrapTag('b')"><b>B</b></button>
-      <button class="tbtn" onclick="wrapTag('i')"><i>I</i></button>
-      <button class="tbtn" onclick="wrapTag('u')"><u>U</u></button>
-      <button class="tbtn" onclick="doLink()">🔗</button>
-      <button class="tbtn" onclick="doHr()">— HR</button>
-      <div class="mode-pills">
-        <button class="mpill on" id="pill-plain" onclick="setMode('plain')">Plain</button>
-        <button class="mpill"    id="pill-html"  onclick="setMode('html')">HTML</button>
+  <!-- Sheet stats chips -->
+  <div class="chips" id="chips" style="display:none">
+    <div class="chip"><div class="chip-val s" id="cs">—</div><div class="chip-key">Total Contacts</div></div>
+    <div class="chip"><div class="chip-val p" id="cp">—</div><div class="chip-key">Pending</div></div>
+    <div class="chip"><div class="chip-val f" id="cf">—</div><div class="chip-key">Already Sent</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab on" onclick="switchTab('import')">📥 Import Contacts</button>
+    <button class="tab"    onclick="switchTab('compose')">✉️ Compose & Send</button>
+  </div>
+
+  <!-- ── IMPORT TAB ── -->
+  <div class="tab-panel on" id="tab-import">
+
+    <div class="import-area" id="drop-zone">
+      <input type="file" id="csv-file" accept=".csv,.txt">
+      <div class="import-icon">📂</div>
+      <div class="import-hint">
+        <strong>Drop a CSV file here</strong> or click to browse<br>
+        Columns: <code>Name, Email</code> — or just <code>Email</code> (Name optional)
       </div>
     </div>
 
-    <div class="composer-body">
-      <div class="subject-row">
-        <label>Subject</label>
-        <input type="text" id="subject" placeholder="Your email subject…">
+    <div class="or-divider"><span>or paste</span></div>
+
+    <textarea id="paste-box" placeholder="Paste emails here — one per line, or comma-separated.&#10;&#10;Also supports:  Name &lt;email@example.com&gt;  format.&#10;&#10;chioma@example.com&#10;alice@example.com&#10;Bob Mensah &lt;bob@example.com&gt;"></textarea>
+    <div class="paste-hint">Supports plain emails, comma-separated, or "Name &lt;email&gt;" format.</div>
+
+    <!-- Preview table -->
+    <div class="import-preview" id="import-preview">
+      <div class="iph">
+        <span class="iph-title">Preview — <span id="preview-count">0</span> contacts parsed</span>
+        <button class="tbtn" onclick="clearImport()">✕ Clear</button>
       </div>
-      <textarea id="msgbox" placeholder="Hi {{name}},&#10;&#10;Write your message here…"></textarea>
+      <div class="ipt">
+        <table>
+          <thead><tr><th>#</th><th>Name</th><th>Email</th></tr></thead>
+          <tbody id="preview-tbody"></tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="ph-bar">
-      <span class="ph-label">Insert →</span>
-      <button class="php" onclick="insertPH('name')">{{name}}</button>
-      <button class="php" onclick="insertPH('firstname')">{{firstname}}</button>
-      <button class="php" onclick="insertPH('email')">{{email}}</button>
+    <div class="import-actions">
+      <button class="btn btn-primary" id="import-btn" onclick="doImport()" disabled>⬆ Log to Sheet</button>
+      <button class="btn btn-ghost"   onclick="parseInput()">↻ Re-parse</button>
+    </div>
+
+    <div class="statusbox" id="import-status">
+      <div class="shead"><span class="stitle" id="ist-title">Log</span><span class="sdot" id="ist-dot"></span></div>
+      <div class="slog" id="ist-log"></div>
     </div>
   </div>
 
-  <!-- Actions -->
-  <div class="actions">
-    <button class="btn-send" id="send-btn" onclick="sendCampaign()">▶ Send Campaign</button>
-    <button class="btn-preview" onclick="openPreview()">Preview</button>
-    <label class="resend-opt">
-      <input type="checkbox" id="resend">
-      <label for="resend">Re-send to already-sent contacts</label>
-    </label>
-  </div>
+  <!-- ── COMPOSE TAB ── -->
+  <div class="tab-panel" id="tab-compose">
 
-  <!-- Status log -->
-  <div class="statusbox" id="statusbox">
-    <div class="shead">
-      <span class="stitle" id="stitle">Log</span>
-      <span class="sdot"   id="sdot"></span>
+    <div class="composer">
+      <div class="toolbar">
+        <span class="tlabel">Format</span>
+        <button class="tbtn" onclick="wrapTag('b')"><b>B</b></button>
+        <button class="tbtn" onclick="wrapTag('i')"><i>I</i></button>
+        <button class="tbtn" onclick="wrapTag('u')"><u>U</u></button>
+        <button class="tbtn" onclick="doLink()">🔗</button>
+        <button class="tbtn" onclick="doHr()">— HR</button>
+        <div class="mode-pills">
+          <button class="mpill on" id="pill-plain" onclick="setMode('plain')">Plain</button>
+          <button class="mpill"    id="pill-html"  onclick="setMode('html')">HTML</button>
+        </div>
+      </div>
+      <div class="cbody">
+        <div class="subject-row">
+          <label>Subject</label>
+          <input type="text" id="subject" placeholder="Your email subject…">
+        </div>
+        <textarea id="msgbox" placeholder="Hi {{name}},&#10;&#10;Write your message here…"></textarea>
+      </div>
+      <div class="ph-bar">
+        <span class="ph-label">Insert →</span>
+        <button class="php" onclick="insertPH('name')">{{name}}</button>
+        <button class="php" onclick="insertPH('firstname')">{{firstname}}</button>
+        <button class="php" onclick="insertPH('email')">{{email}}</button>
+      </div>
     </div>
-    <div class="slog" id="slog"></div>
-  </div>
 
-  <!-- Stats -->
-  <div class="stats" id="stats">
-    <div class="stat"><div class="sval s" id="vs">0</div><div class="skey">Sent</div></div>
-    <div class="stat"><div class="sval k" id="vk">0</div><div class="skey">Skipped</div></div>
-    <div class="stat"><div class="sval f" id="vf">0</div><div class="skey">Failed</div></div>
-  </div>
+    <div class="actions">
+      <button class="btn btn-primary" id="send-btn" onclick="sendCampaign()">▶ Send Campaign</button>
+      <button class="btn btn-ghost"   onclick="openPreview()">Preview</button>
+      <button class="btn btn-danger"  onclick="clearSent()" style="font-size:.8rem;padding:.5rem 1rem">↺ Reset Sent Flags</button>
+      <label class="resend-opt">
+        <input type="checkbox" id="resend">
+        <label for="resend">Re-send to already-sent contacts</label>
+      </label>
+    </div>
+
+    <div class="statusbox" id="send-status">
+      <div class="shead"><span class="stitle" id="sst-title">Log</span><span class="sdot" id="sst-dot"></span></div>
+      <div class="slog" id="sst-log"></div>
+    </div>
+
+  </div><!-- end compose tab -->
 
   <footer>
     <span>Dispatch — Gmail + Google Apps Script</span>
@@ -393,10 +303,7 @@ footer {
 <!-- Preview Overlay -->
 <div class="overlay" id="overlay">
   <div class="pcard">
-    <div class="phead">
-      <h3>Email Preview</h3>
-      <button class="xbtn" onclick="closePreview()">✕</button>
-    </div>
+    <div class="phead"><h3>Email Preview</h3><button class="xbtn" onclick="closePreview()">✕</button></div>
     <div class="pmeta"><strong>Subject:</strong> <span id="psub">—</span></div>
     <div class="pbody" id="pbody"></div>
     <div class="pfooter">
@@ -407,10 +314,11 @@ footer {
 </div>
 
 <script>
-// ── Config ────────────────────────────────────────────
-let htmlMode = false;
+// ── State ─────────────────────────────────────────────
+let htmlMode   = false;
+let parsedContacts = [];
 
-// ── Persist URL + token in localStorage ──────────────
+// ── Persist config ────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   const u = localStorage.getItem('dp_url');
   const t = localStorage.getItem('dp_token');
@@ -420,178 +328,306 @@ window.addEventListener('DOMContentLoaded', () => {
 document.getElementById('gas-url').addEventListener('change', e => localStorage.setItem('dp_url',   e.target.value));
 document.getElementById('token'  ).addEventListener('change', e => localStorage.setItem('dp_token', e.target.value));
 
-// ── Mode toggle ───────────────────────────────────────
+// ── Tabs ──────────────────────────────────────────────
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('on', ['import','compose'][i] === id));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('on', ['import','compose'][i] === id));
+}
+
+// ── CSV / Paste Parsing ───────────────────────────────
+document.getElementById('csv-file').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => parseContacts(ev.target.result);
+  reader.readAsText(file);
+});
+
+// Drag-and-drop
+const dz = document.getElementById('drop-zone');
+dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => parseContacts(ev.target.result);
+  reader.readAsText(file);
+});
+
+document.getElementById('paste-box').addEventListener('input', debounce(parseInput, 400));
+
+function parseInput() {
+  const text = document.getElementById('paste-box').value.trim();
+  if (text) parseContacts(text);
+}
+
+function parseContacts(raw) {
+  const lines = raw.split(/[\n\r]+/).map(l => l.trim()).filter(Boolean);
+  const contacts = [];
+  const seen = new Set();
+
+  lines.forEach(line => {
+    // Skip header row
+    if (/^name[,\t]?email/i.test(line)) return;
+
+    let name = '', email = '';
+
+    // "Name <email>" format
+    const angleMatch = line.match(/^(.+?)\s*<([^>]+)>/);
+    if (angleMatch) {
+      name  = angleMatch[1].trim().replace(/^["']|["']$/g, '');
+      email = angleMatch[2].trim().toLowerCase();
+
+    // CSV line with comma: "Name, email" or "email, Name" or just "email"
+    } else if (line.includes(',')) {
+      const parts = line.split(',').map(p => p.trim());
+      // Detect which part is email
+      const emailPart = parts.find(p => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p));
+      if (emailPart) {
+        email = emailPart.toLowerCase();
+        name  = parts.filter(p => p !== emailPart).join(' ').trim();
+      }
+
+    // Plain email
+    } else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(line)) {
+      email = line.toLowerCase();
+    }
+
+    if (email && !seen.has(email)) {
+      seen.add(email);
+      contacts.push({ name, email });
+    }
+  });
+
+  parsedContacts = contacts;
+  renderPreview(contacts);
+}
+
+function renderPreview(contacts) {
+  const preview = document.getElementById('import-preview');
+  const tbody   = document.getElementById('preview-tbody');
+  const count   = document.getElementById('preview-count');
+  const btn     = document.getElementById('import-btn');
+
+  if (!contacts.length) { preview.classList.remove('show'); btn.disabled = true; return; }
+
+  count.textContent = contacts.length;
+  tbody.innerHTML = contacts.slice(0, 50).map((c, i) =>
+    `<tr><td>${i+1}</td><td>${esc(c.name || '—')}</td><td>${esc(c.email)}</td></tr>`
+  ).join('');
+
+  if (contacts.length > 50) {
+    tbody.innerHTML += `<tr><td colspan="3" style="color:var(--muted);font-size:.75rem;padding:.4rem .75rem">… and ${contacts.length - 50} more</td></tr>`;
+  }
+
+  preview.classList.add('show');
+  btn.disabled = false;
+}
+
+function clearImport() {
+  parsedContacts = [];
+  document.getElementById('paste-box').value = '';
+  document.getElementById('csv-file').value  = '';
+  document.getElementById('import-preview').classList.remove('show');
+  document.getElementById('import-btn').disabled = true;
+}
+
+// ── Import to Sheet ───────────────────────────────────
+async function doImport() {
+  if (!parsedContacts.length) return;
+  const res = await callGAS({ action: 'import', contacts: parsedContacts }, 'import');
+  if (res && res.ok) {
+    ilog('ok',  `✓ Import complete.`);
+    ilog('ok',  `  Added: ${res.added} | Duplicates skipped: ${res.dupes} | Invalid: ${res.invalid}`);
+    iStatus('ok');
+    fetchStats();
+  }
+}
+
+// ── Sheet Stats ───────────────────────────────────────
+async function fetchStats() {
+  const data = await callGAS({ action: 'stats' }, 'silent');
+  if (data && data.ok) {
+    document.getElementById('cs').textContent = data.total;
+    document.getElementById('cp').textContent = data.pending;
+    document.getElementById('cf').textContent = data.sent;
+    document.getElementById('chips').style.display = 'flex';
+  }
+}
+
+// ── Reset sent flags ──────────────────────────────────
+async function clearSent() {
+  if (!confirm('Reset all "Sent" flags? Everyone will be eligible for the next campaign.')) return;
+  const data = await callGAS({ action: 'clear' }, 'send');
+  if (data && data.ok) {
+    slog('ok', `✓ Reset ${data.reset} contacts. Everyone is pending again.`);
+    sStatus('ok'); fetchStats();
+  }
+}
+
+// ── Compose ───────────────────────────────────────────
 function setMode(m) {
   htmlMode = m === 'html';
   document.getElementById('pill-plain').classList.toggle('on', !htmlMode);
   document.getElementById('pill-html' ).classList.toggle('on',  htmlMode);
 }
-
-// ── Toolbar ───────────────────────────────────────────
 function wrapTag(tag) {
   const ta = document.getElementById('msgbox');
   const s = ta.selectionStart, e = ta.selectionEnd;
   const sel = ta.value.slice(s, e) || 'text';
   ta.setRangeText(`<${tag}>${sel}</${tag}>`, s, e, 'end');
-  ta.focus();
-  setMode('html');
+  ta.focus(); setMode('html');
 }
 function doLink() {
-  const url = prompt('URL:', 'https://');
-  if (!url) return;
+  const url = prompt('URL:', 'https://'); if (!url) return;
   const ta = document.getElementById('msgbox');
   const s = ta.selectionStart, e = ta.selectionEnd;
-  const lbl = ta.value.slice(s, e) || 'Click here';
-  ta.setRangeText(`<a href="${url}">${lbl}</a>`, s, e, 'end');
+  ta.setRangeText(`<a href="${url}">${ta.value.slice(s,e)||'Click here'}</a>`, s, e, 'end');
   ta.focus(); setMode('html');
 }
 function doHr() {
-  const ta = document.getElementById('msgbox');
-  const p = ta.selectionEnd;
-  ta.setRangeText('\n<hr>\n', p, p, 'end');
-  ta.focus(); setMode('html');
+  const ta = document.getElementById('msgbox'); const p = ta.selectionEnd;
+  ta.setRangeText('\n<hr>\n', p, p, 'end'); ta.focus(); setMode('html');
 }
 function insertPH(key) {
-  const ta = document.getElementById('msgbox');
-  const p = ta.selectionStart;
-  ta.setRangeText(`{{${key}}}`, p, p, 'end');
-  ta.focus();
-}
-
-// ── Placeholder resolver ──────────────────────────────
-function resolve(tpl, fields) {
-  return tpl.replace(/\{\{\s*(\w+)\s*\}\}/gi, (_, k) => fields[k.toLowerCase()] ?? `{{${k}}}`);
+  const ta = document.getElementById('msgbox'); const p = ta.selectionStart;
+  ta.setRangeText(`{{${key}}}`, p, p, 'end'); ta.focus();
 }
 
 // ── Preview ───────────────────────────────────────────
 function openPreview() {
   const subj = document.getElementById('subject').value || '(no subject)';
   const body = document.getElementById('msgbox').value;
-  const demo = resolve(body, { name: 'Chioma Obi', firstname: 'Chioma', email: 'chioma@example.com' });
-
+  const demo = resolve(body, { name:'Chioma Obi', firstname:'Chioma', email:'chioma@example.com' });
   document.getElementById('psub').textContent = subj;
   const pb = document.getElementById('pbody');
   if (htmlMode) { pb.innerHTML = demo; pb.className = 'pbody html'; }
   else          { pb.textContent = demo; pb.className = 'pbody'; }
-
   document.getElementById('overlay').classList.add('open');
 }
-function closePreview() {
-  document.getElementById('overlay').classList.remove('open');
-}
+function closePreview() { document.getElementById('overlay').classList.remove('open'); }
 async function sendTest() {
   const email = document.getElementById('test-email').value.trim();
-  if (!email) { alert('Enter a test email address.'); return; }
-  await callGAS({ previewEmail: email });
+  if (!email) { alert('Enter a test email.'); return; }
+  const data = await callGAS({ action:'preview', subject: document.getElementById('subject').value, message: document.getElementById('msgbox').value, isHtml: htmlMode, previewEmail: email }, 'send');
+  if (data && data.ok) { slog('ok', `✓ Test email sent to ${email}`); closePreview(); }
 }
 
 // ── Send campaign ─────────────────────────────────────
 async function sendCampaign() {
   const subject = document.getElementById('subject').value.trim();
   const message = document.getElementById('msgbox').value.trim();
-  if (!subject || !message) {
-    log('err', '✗ Subject and message are required.');
-    setStatus('err'); return;
+  if (!subject || !message) { slog('err', '✗ Subject and message are required.'); sStatus('err'); return; }
+  const data = await callGAS({
+    action: 'send', subject, message,
+    isHtml: htmlMode,
+    sendToAll: document.getElementById('resend').checked,
+  }, 'send');
+  if (data && data.ok) {
+    slog('ok', `✓ Done — Sent: ${data.sent} | Skipped: ${data.skipped} | Failed: ${data.failed}`);
+    (data.errors||[]).forEach(e => slog('err', `  ✗ ${e.email}: ${e.error}`));
+    sStatus('ok'); fetchStats();
   }
-  await callGAS({ sendToAll: document.getElementById('resend').checked });
 }
 
 // ── Core fetch ────────────────────────────────────────
-async function callGAS(extra = {}) {
+async function callGAS(payload, logTarget = 'send') {
   const url   = document.getElementById('gas-url').value.trim();
   const token = document.getElementById('token').value.trim();
-
   if (!url || !token) {
-    log('err', '✗ GAS URL and secret token are required.');
-    setStatus('err'); return;
+    alert('Enter your GAS URL and secret token first.');
+    return null;
+  }
+  payload.token = token;
+
+  const isSend = logTarget === 'send';
+  const isImport = logTarget === 'import';
+  const isSilent = logTarget === 'silent';
+
+  if (isSend)   { clearSLog(); sStatus('sending'); slog('info', '→ Connecting…'); }
+  if (isImport) { clearILog(); iStatus('sending'); ilog('info', '→ Sending to sheet…'); }
+
+  if (isSend) {
+    const btn = document.getElementById('send-btn');
+    btn.disabled = true; btn.textContent = '⏳ Sending…';
+  }
+  if (isImport) {
+    const btn = document.getElementById('import-btn');
+    btn.disabled = true; btn.textContent = '⏳ Importing…';
   }
 
-  const btn = document.getElementById('send-btn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Sending…';
-  clearLog();
-  setStatus('sending');
-  log('info', '→ Connecting to Apps Script…');
-
-  const payload = {
-    token,
-    subject:  document.getElementById('subject').value.trim(),
-    message:  document.getElementById('msgbox').value.trim(),
-    isHtml:   htmlMode,
-    ...extra,
-  };
-
+  let data = null;
   try {
-    // ✅ URLSearchParams = form-encoded = no CORS preflight on GAS
     const res = await fetch(url, {
       method: 'POST',
       body:   new URLSearchParams({ data: JSON.stringify(payload) }),
     });
-
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-    const data = await res.json();
-
-    if (data.ok) {
-      if (data.mode === 'preview') {
-        log('ok', `✓ Test email sent to ${extra.previewEmail}`);
-        closePreview();
-      } else {
-        log('ok', `✓ Campaign complete — Sent: ${data.sent} | Skipped: ${data.skipped} | Failed: ${data.failed}`);
-        showStats(data.sent, data.skipped, data.failed);
-        (data.errors || []).forEach(e => log('err', `  ✗ ${e.email}: ${e.error}`));
-      }
-      setStatus('ok');
-    } else {
-      log('err', `✗ ${data.error}`);
-      setStatus('err');
+    data = await res.json();
+    if (!data.ok && !isSilent) {
+      if (isSend)   { slog('err', `✗ ${data.error}`); sStatus('err'); }
+      if (isImport) { ilog('err', `✗ ${data.error}`); iStatus('err'); }
     }
-
   } catch (err) {
-    log('err', `✗ Fetch failed: ${err.message}`);
-    log('info', '  Tip: make sure the GAS URL is correct and deployed as "Anyone".');
-    setStatus('err');
+    if (!isSilent) {
+      const msg = `✗ Fetch failed: ${err.message}`;
+      if (isSend)   { slog('err', msg); slog('info','  Check GAS URL is correct and deployed as "Anyone".'); sStatus('err'); }
+      if (isImport) { ilog('err', msg); iStatus('err'); }
+    }
   }
 
-  btn.disabled = false;
-  btn.textContent = '▶ Send Campaign';
+  if (isSend) {
+    const btn = document.getElementById('send-btn');
+    btn.disabled = false; btn.textContent = '▶ Send Campaign';
+  }
+  if (isImport) {
+    const btn = document.getElementById('import-btn');
+    btn.disabled = false; btn.textContent = '⬆ Log to Sheet';
+  }
+  return data;
 }
 
 // ── UI helpers ────────────────────────────────────────
-function setStatus(s) {
-  const box   = document.getElementById('statusbox');
-  const dot   = document.getElementById('sdot');
-  const title = document.getElementById('stitle');
-  box.classList.add('show');
-  dot.className = 'sdot' + (s === 'sending' ? ' sending' : s === 'ok' ? ' ok' : ' err');
-  title.textContent = s === 'sending' ? 'Sending…' : s === 'ok' ? 'Complete' : 'Error';
+function sStatus(s) {
+  const box = document.getElementById('send-status'); box.classList.add('show');
+  document.getElementById('sst-dot').className   = 'sdot' + cls(s);
+  document.getElementById('sst-title').textContent = label(s);
 }
-function log(type, text) {
-  const l = document.getElementById('slog');
-  const span = document.createElement('span');
-  span.className = `ll ${type}`;
-  span.textContent = text;
-  l.appendChild(span);
-  l.scrollTop = l.scrollHeight;
+function iStatus(s) {
+  const box = document.getElementById('import-status'); box.classList.add('show');
+  document.getElementById('ist-dot').className   = 'sdot' + cls(s);
+  document.getElementById('ist-title').textContent = label(s);
 }
-function clearLog() {
-  document.getElementById('slog').innerHTML = '';
+function cls(s) { return s==='sending'?' sending':s==='ok'?' ok':' err'; }
+function label(s) { return s==='sending'?'Working…':s==='ok'?'Complete':'Error'; }
+
+function slog(t, txt) { appendLog('sst-log', t, txt); }
+function ilog(t, txt) { appendLog('ist-log', t, txt); }
+function clearSLog()  { document.getElementById('sst-log').innerHTML = ''; }
+function clearILog()  { document.getElementById('ist-log').innerHTML = ''; }
+function appendLog(id, type, text) {
+  const el = document.getElementById(id);
+  const s  = document.createElement('span');
+  s.className = `ll ${type}`; s.textContent = text;
+  el.appendChild(s); el.scrollTop = el.scrollHeight;
 }
-function showStats(s, k, f) {
-  document.getElementById('stats').classList.add('show');
-  document.getElementById('vs').textContent = s;
-  document.getElementById('vk').textContent = k;
-  document.getElementById('vf').textContent = f;
+
+function resolve(tpl, fields) {
+  return tpl.replace(/\{\{\s*(\w+)\s*\}\}/gi, (_,k) => fields[k.toLowerCase()] ?? `{{${k}}}`);
 }
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
 // ── Clock ─────────────────────────────────────────────
 function tick() {
-  document.getElementById('clock').textContent  = new Date().toLocaleTimeString();
-  document.getElementById('ftime').textContent  = new Date().toLocaleDateString();
+  const now = new Date();
+  document.getElementById('hright').innerHTML = now.toLocaleTimeString() + '<br>' + now.toLocaleDateString();
+  document.getElementById('ftime').textContent = now.toLocaleDateString();
 }
 setInterval(tick, 1000); tick();
 
-// ── Close overlay on backdrop click ──────────────────
 document.getElementById('overlay').addEventListener('click', function(e) {
   if (e.target === this) closePreview();
 });
